@@ -164,3 +164,6 @@ ICPR
 chart_images
 images
 images_test
+models
+test
+test.py

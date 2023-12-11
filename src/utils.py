@@ -1,8 +1,6 @@
 import os
 import torch
-from pathlib import Path
-import shutil
-import random
+import json
 from torch.utils.tensorboard import SummaryWriter
 
 def find_classes(target_dir):
@@ -37,7 +35,6 @@ def save_model(model,
     if acc > best_acc and loss < min_loss :
         torch.save(checkpoint, os.path.join(target_dir, 'best.pt'))
         best_acc = acc
-        min_loss = loss
 
 def tensorboard(train_loss, test_loss, test_acc, epoch, args):
     writer = SummaryWriter(args.tensorboard)
@@ -49,4 +46,37 @@ def tensorboard(train_loss, test_loss, test_acc, epoch, args):
     writer.add_scalars(main_tag='Accuracy',
                        tag_scalar_dict={'test_acc': test_acc},
                        global_step=epoch)
+
+def read_json(path):
+    with open(path) as data:
+        f = json.load(data)
+        output = f['task1']['output']['chart_type']
+    return output
+
+
+def read_label(path):
+    label_list = []
+    for file in sorted(os.listdir(path)):
+        file_path = os.path.join(path, file)
+        label = read_json(file_path)
+        label_list.append(label)
+    return label_list
+
+
+def evaluate_score(label: list,
+                   output: list):
+    
+    assert len(label) == len(output)
+    count = 0
+    for i in range(len(output)):
+        if label[i] == output[i]:
+            count += 1
+    print(f'Number of total images: {len(output)}')
+    print(f'Number of correct predictions: {count}')
+    
+    ratio = round(float((count/len(label))*100),1)
+    
+    print(f'Prediction score on the total evaluation set: {ratio}')
+
+
 
