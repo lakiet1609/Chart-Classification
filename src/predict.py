@@ -9,48 +9,15 @@ import os
 import sys
 sys.path.insert(0, '../src')
 
-from utils import find_classes, read_label, evaluate_score
+from utils import find_classes, read_label, evaluate_score, predict_custom_img, pred_distribution, visualize_test_pred
 
-
-def predict_custom_img(model,
-                       image_path,
-                       class_names,
-                       image_size,
-                       transform,
-                       device):
-    
-    img = Image.open(image_path).convert('RGB')
-    
-    if transform:
-        img_transform = transform(img)
-    else:
-        img_transform = transforms.Compose([
-            transforms.Resize((image_size,image_size)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                 std=[0.229, 0.224, 0.225])
-        ])
-    
-    model.to(device)
-    model.eval()
-    with torch.inference_mode():
-        img_transformation = img_transform.unsqueeze(0)
-        img_transformation = model(img_transformation.to(device))
-        
-    img_pred_prob = torch.softmax(img_transformation, dim=1)
-    img_pred_label = torch.argmax(img_pred_prob, dim=1)
-    
-    probs = img_pred_prob.max()
-    label = class_names[img_pred_label.item()]
-    
-    return probs, label
 
 def get_args():
     parser = argparse.ArgumentParser('Evaluate classification model')
-    parser.add_argument('--load-checkpoint', '-c', type=str, default='models/resnet.pt', help='path to saved the checkpoint')
-    parser.add_argument('--evaluation-path', '-e', type=str, default='images_test/images', help='Images path to evaluate')
-    parser.add_argument('--evaluation-label', '-v', type=str, default='images_test/labels', help='Label path to evaluate')
-    parser.add_argument('--train-path', '-t',  type=str, default='images/train', help='Images path to train')
+    parser.add_argument('--load-checkpoint', '-c', type=str, default=r'models\best4.pt', help='path to saved the checkpoint')
+    parser.add_argument('--evaluation-path', '-e', type=str, default=r'image_test\images', help='Images path to evaluate')
+    parser.add_argument('--evaluation-label', '-v', type=str, default=r'image_test\labels', help='Label path to evaluate')
+    parser.add_argument('--train-path', '-t',  type=str, default=r'images\train', help='Images path to train')
     args, unknown = parser.parse_known_args()
     return args
 
@@ -66,14 +33,17 @@ def evaluate(args):
     classes, _ = find_classes(train_path)
 
     #Load model
-    weights = torchvision.models.ResNet101_Weights.DEFAULT
-    model = torchvision.models.resnet101(weights=weights).to(device=device)
+    weights = torchvision.models.EfficientNet_V2_S_Weights.DEFAULT
+    model = torchvision.models.efficientnet_v2_s(weights=weights).to(device=device)
     auto_transform = weights.transforms()
 
+    model.classifier = torch.nn.Sequential(
+        torch.nn.Dropout(p=0.5, inplace=True),
+        torch.nn.Linear(in_features=1280, out_features=len(classes), bias=True)).to(device=device)
 
     #Load model
     checkpoint = torch.load(load_checkpoint)
-    model.load_state_dict(checkpoint['model'], strict=False)
+    model.load_state_dict(checkpoint['model'])
     
     predictions = []
     for img in sorted(os.listdir(evaluation_path)):
@@ -86,16 +56,25 @@ def evaluate(args):
                                       device=device) 
         predictions.append(label)
     
-
     labels = read_label(evaluation_label) 
+    true_pred = evaluate_score(label=labels, output=predictions)
 
-    return predictions, labels
+    pred_distribution(predictions, labels, true_pred)
+    
+    # while len(evaluation_path):
+    #     visualize_test_pred(test_imgs=evaluation_path,
+    #                         test_labels= evaluation_label,
+    #                         model=model,
+    #                         image_size=None,
+    #                         class_names=classes,
+    #                         num_images=16,
+    #                         transform=auto_transform,
+    #                         device=device)
+    # return predictions, labels
 
 if __name__ == '__main__':
     args = get_args()
-    evaluate(args=args)
-    predictions, labels = evaluate(args=args)
-    evaluate_score(label=labels, output=predictions)
+    evaluate(args)
 
 
         
