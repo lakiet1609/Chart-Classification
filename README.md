@@ -49,7 +49,7 @@ python train.py --model-name YOUR_PROCESS
 ```
 
 ### Run inference only (without training a new network)
-Please make sure that the ```/dataset``` and ```/pretrained``` folders are correctly placed in the specific directory. If ```entity``` and pretrained model exists then we can put it in ```load_entity``` and ```load_checkpoint```, else just run the pipeline from scratch. Thereafter, run the following command:
+Please make sure that the ```/dataset``` and ```/pretrained_models``` folders are correctly placed in the specific directory. If ```entity``` and ```/pretrained_models``` exists then we can modify it in ```load_entity``` and ```load_checkpoint```, else just run the pipeline from scratch. Thereafter, run the following command:
 
 ```
 python predict.py --model-name YOUR_PROCESS 
