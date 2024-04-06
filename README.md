@@ -37,4 +37,20 @@ dataset/
         └── .../
 ```
 
+```split_dataset.py``` can be used for organizing the origin dataset into the required format
 
+## How to run
+Please make sure that dataset and models are in the right format and directory befor execute any train or inference process
+
+### Train the network
+For training the each process, the model name is set as A, B, base ... Depends on each phase, we choose the right model for that phase
+```
+python train.py --model-name YOUR_PROCESS
+```
+
+### Run inference only (without training a new network)
+Please make sure that the ```/dataset``` and ```/pretrained``` folders are correctly placed in the specific directory. If ```entity``` and pretrained model exists then we can put it in ```load_entity``` and ```load_checkpoint```, else just run the pipeline from scratch. Thereafter, run the following command:
+
+```
+python predict.py --model-name YOUR_PROCESS 
+```
