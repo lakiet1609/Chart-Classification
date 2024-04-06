@@ -14,9 +14,9 @@ docker run -it --name chart --gpus all --shm-size=1gb -v YOUR_PATH vision:latest
 ```
 
 ## Download dataset + pre-trained models
-Please download the pretrained model by following this link [located here](https://drive.google.com/drive/folders/1MN17L4FJ2DVZUcGJxl1b3CT5Xfdiyfyn?usp=sharing) and the training [located here](https://www.dropbox.com/s/85yfkigo5916xk1/ICPR2022_CHARTINFO_UB_PMC_TRAIN_v1.0.zip?dl=0) and testing datasets [located here](https://www.dropbox.com/s/w0j0rxund06y04f/ICPR2022_CHARTINFO_UB_UNITEC_PMC_TEST_v2.1.zip?dl=0)
+Please download the pretrained model by following this link [located here](https://drive.google.com/drive/folders/1MN17L4FJ2DVZUcGJxl1b3CT5Xfdiyfyn?usp=sharing) and the training [located here](https://www.dropbox.com/s/85yfkigo5916xk1/ICPR2022_CHARTINFO_UB_PMC_TRAIN_v1.0.zip?dl=0) and testing [located here](https://www.dropbox.com/s/w0j0rxund06y04f/ICPR2022_CHARTINFO_UB_UNITEC_PMC_TEST_v2.1.zip?dl=0) datasets 
 
-Thereafter, uzip the training and testing datasets and place the contents of ```/training_set``` and ```/testing_set``` folder within the right format like below:
+Thereafter, unzip the training and testing datasets and place the contents of ```/training_set``` and ```/testing_set``` folder within the right format like below:
 
 ```bash
 dataset/
