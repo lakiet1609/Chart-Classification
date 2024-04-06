@@ -19,9 +19,7 @@ Please download the pretrained model by following this link [located here](https
 Thereafter, uzip the training and testing datasets and place the contents of ```/training_set``` and ```/testing_set``` folder within the right format like below:
 
 ```bash
-project-root/
-│
-└── dataset/
+dataset/
     ├── train/
     │   ├── area/
     │   ├── surface/
@@ -38,3 +36,5 @@ project-root/
         ├── scatter line/
         └── .../
 ```
+
+
