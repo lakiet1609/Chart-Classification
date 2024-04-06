@@ -40,7 +40,7 @@ dataset/
 ```split_dataset.py``` can be used for organizing the origin dataset into the required format
 
 ## How to run
-Please make sure that dataset and models are in the right format and directory befor execute any train or inference process
+Please make sure that dataset and models are in the right format and directory before executing any train or inference process
 
 ### Train the network
 For training the each process, the model name is set as A, B, base ... Depends on each phase, we choose the right model for that phase
