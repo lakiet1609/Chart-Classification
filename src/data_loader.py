@@ -3,6 +3,7 @@ from PIL import Image
 from pathlib import Path
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.data import DataLoader, WeightedRandomSampler
+from torchvision import transforms
 import sys
 sys.path.insert(0, '../src')
 
@@ -35,9 +36,10 @@ def Load_Data(train_dir: str,
               test_dir: str,
               batch_size: int,
               num_workers: int,
-              transform):
+              transform
+):
 
-
+    
     train_data = Custom_Image_Folder(train_dir, transform)
     test_data = Custom_Image_Folder(test_dir, transform)
 
@@ -66,3 +68,5 @@ def Load_Data(train_dir: str,
                                  shuffle=False)
 
     return train_dataloader, test_dataloader
+
+

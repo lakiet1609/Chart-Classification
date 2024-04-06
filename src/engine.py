@@ -9,6 +9,7 @@ def train_step(model,
                dataloader,
                loss_function,
                optimizer,
+               scheduler,
                device,
                ):
     
@@ -24,6 +25,7 @@ def train_step(model,
         loss.backward()
         optimizer.step()
     train_loss /= len(dataloader)
+    scheduler.step(train_loss)
     return train_loss
     
 def test_step(model,
@@ -67,10 +69,16 @@ def Training(model,
     }
     
     for epoch in tqdm(range(start_epoch, epochs), colour='CYAN'):
+        if epoch > 30:
+            scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=2)
+        else:
+            scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)
+        
         train_loss = train_step(model=model,
                                 dataloader=train_dataloader,
                                 loss_function=loss_function,
                                 optimizer=optimizer,
+                                scheduler=scheduler,
                                 device=device)
         
         test_loss, test_acc = test_step(model=model,

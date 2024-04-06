@@ -159,11 +159,21 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-dataset
-ICPR
-chart_images
-images
 images_test
 models
-test
-test.py
+original
+dataset_2
+dataset1
+image_test
+model_A
+model_B
+model_C
+model_D
+B_class
+C_class
+a_image_test
+b_image_test
+c_image_test
+d_image_test
+new_A_class
+new_b_class
