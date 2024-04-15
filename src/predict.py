@@ -52,8 +52,8 @@ def prediction(args):
     
     #Preprocess for each composed classes    
     if model_name is None:
-        weights = torchvision.models.EfficientNet_B4_Weights.DEFAULT
-        model = torchvision.models.efficientnet_b4(weights=weights).to(device=device)
+        weights = torchvision.models.EfficientNet_B3_Weights.DEFAULT
+        model = torchvision.models.efficientnet_b3(weights=weights).to(device=device)
         image_transformation = weights.transforms()
         image_size = 320
         in_features = 1536
