@@ -45,12 +45,12 @@ Please make sure that dataset and models are in the right format and directory b
 ### Train the network
 For training the each process, the model name is set as A, B, base ... Depends on each phase, we choose the right model for that phase
 ```
-python train.py --model-name YOUR_PROCESS
+python src/train.py --model-name YOUR_PROCESS
 ```
 
 ### Run inference only (without training a new network)
 Please make sure that the ```/dataset``` and ```/pretrained_models``` folders are correctly placed in the specific directory. If ```entity``` and ```/pretrained_models``` exists then we can modify it in ```load_entity``` and ```load_checkpoint```, else just run the pipeline from scratch. Thereafter, run the following command:
 
 ```
-python predict.py --model-name YOUR_PROCESS 
+python src/predict.py --model-name YOUR_PROCESS 
 ```

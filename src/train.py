@@ -23,7 +23,7 @@ def get_state_dict(self, *args, **kwargs):
 
 def get_args():
     parser = argparse.ArgumentParser('Train classification model')
-    parser.add_argument('--model-name', '-n', type=str, default='B', help='batch size of the dataset')
+    parser.add_argument('--model-name', '-n', type=str, default='B', help='Name of the current training phase')
     parser.add_argument('--batch-size', '-b', type=int, default=16, help='batch size of the dataset')
     parser.add_argument('--epochs', '-e', type=int, default=2, help='Epochs to train')
     parser.add_argument('--image-size', '-i', type=int, default=384, help='Input image size')
@@ -62,7 +62,7 @@ def main(args):
         image_transformation = weights.transforms()
         image_size = 320
         in_features = 1536
-        drop_out_ratio = 0.5
+        drop_out_ratio = 0
     
     else: 
         assert model_name is not None

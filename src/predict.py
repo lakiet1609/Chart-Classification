@@ -18,7 +18,7 @@ def get_state_dict(self, *args, **kwargs):
 
 def get_args():
     parser = argparse.ArgumentParser('Evaluate classification model')
-    parser.add_argument('--model-name', '-n', type=str, default='B', help='batch size of the dataset')
+    parser.add_argument('--model-name', '-n', type=str, default='B', help='Name of the current predicting phase')
     parser.add_argument('--image-size', '-i', type=int, default=384, help='Image size to resize')
     parser.add_argument('--save-entity', '-s', type=str, default='entity', help='Saving the entity')
     parser.add_argument('--load-entity', '-l', type=str, default=None, help='Loading the entity')
