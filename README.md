@@ -43,6 +43,8 @@ dataset/
 Please make sure that dataset and models are in the right format and directory before executing any train or inference process
 
 ### Train the network
+In training phase, if we wanna train for specific model, we must split the dataset following that specific phase following the paper pipeline structure and respectively for the other models. There is a script named ```split_dataset.py```, inside that script functions called  ```compose_class``` and  ```custom_folder``` will help us to modify the dataset structure following the paper structure requirements.
+
 For training the each process, the model name is set as A, B, base ... Depends on each phase, we choose the right model for that phase
 ```
 python src/train.py --model-name YOUR_PROCESS
